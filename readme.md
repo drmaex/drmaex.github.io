@@ -5,7 +5,7 @@ This guide will show you how you can setup eclipse 2019.12 with latest version o
  Althought the screenshots are for windows the same commandline actions can also be made in linux (tested by myself)
 
 Almost all information is availalble at 
-https://gnu-mcu-eclipse.github.io/
+[https://gnu-mcu-eclipse.github.io/]
 but it is somehow confusing to understand what you have to do if you have never done it before
 Here i will try to show you how I got everything working
 
@@ -25,13 +25,13 @@ Below I extracted all the steps with links which were necessary to install Eclip
 
 * ### Download Eclipse
     Download eclipse but do not run it yet
-    https://github.com/gnu-mcu-eclipse/org.eclipse.epp.packages/releases/
+    [https://github.com/gnu-mcu-eclipse/org.eclipse.epp.packages/releases/]
 
     *Note: To install the xPacks you will need XPM. XPM needs Node.js to be installed on your computer. If you got working XPM already then just skip this steps.*
 
 
 * #### Install Node.js
-    Go ahead and visit this link https://nodejs.org/en/ . Download the exe and install it. It asked me if I would like to install addictional build tools os something like that and to be sure everything would work I did it
+    Go ahead and visit this link [https://nodejs.org/en/] . Download the exe and install it. It asked me if I would like to install addictional build tools os something like that and to be sure everything would work I did it
     After that, if you type 
     ```
     node --version
@@ -49,7 +49,7 @@ Below I extracted all the steps with links which were necessary to install Eclip
 
     *for linux: it is not necessary to run the commands as root or sudo, the xPacks will land in your home directory in linux under "/home/XXX/opt/xPacks" and in "C:\Users\XXX\AppData\Roaming\xPacks" on Windows*
 
-  * ### GNU MCU Eclipse Windows Build Tools
+  * ### (WINDOWS ONLY!) GNU MCU Eclipse Windows Build Tools
     ```
     xpm install --global @gnu-mcu-eclipse/windows-build-tools@latest
     ```
@@ -80,7 +80,7 @@ If your Eclipse starts then you can skip this step
 
   * ### Installing Java_x64
 
-    Visit https://www.java.com/en/download/manual.jsp download and run installer. After that Eclipse should start
+    Visit [https://www.java.com/en/download/manual.jsp] download and run installer. After that Eclipse should start
 
 ## Setup eclipse
 
@@ -122,7 +122,7 @@ To change this you should perform the following steps:
 
 ## Import the project
 
-Get a copy of your desired project. In my case it is the bldc from the VESC project ( https://github.com/vedderb/bldc )
+Get a copy of your desired project. In my case it is the bldc from the VESC project ( [https://github.com/vedderb/bldc] )
 
 Now go ahead an select
 ```
