@@ -2,11 +2,11 @@
 # HOW-TO setup Eclipse 2019.12 with latest ARM GNU Plugins openOCD and xPacks
 
 This guide will show you how you can setup eclipse 2019.12 with latest version of openOCD and help you to import an makefile project and start debugging (at least an STM32F4). It is not quite straight forward so I thought I write it down for myself and maybe it will be useful for others.
- Althought the screenshots are for windows the same commandline actions can also be made in linux (tested by myself)
+The screenshots are mixed up alittle between Linux and Windows, because I haven't take all necessary screenshots at first time but shows also that this guide is os independant.
 
 Almost all information is availalble at 
-https://gnu-mcu-eclipse.github.io/
-but it is somehow confusing to understand what you have to do if you have never done it before
+<https://gnu-mcu-eclipse.github.io/>
+but it is somehow confusing to understand what you have to do if you have never done it before.
 Here i will try to show you how I got everything working
 
 ### The Source
@@ -15,7 +15,7 @@ First open your browser and search in google for "gnu arm eclipse". In my search
 
 Hit the link and navigate to the download section
 
-In the download section you can find the most links I have provided below but a bit more decentralised and I think they mixed up the old and new way of installing the plugins. But there is much more info on this site so it is worth to read the stuff there (QEMU seems to be very promicing). Also when something should be unclear from this guide you can try to figure out how it was meant in the original. 
+In the download section you can find the most links I have provided below. But there is much more info on this site so it is worth to read the stuff there (QEMU seems to be very promicing). Also when something should be unclear from this guide you can try to figure out how it was meant in the original. 
 
 ![mcu website](./images/mcu_eclipse_website.png)
 
@@ -24,13 +24,20 @@ In the download section you can find the most links I have provided below but a 
 Below I extracted all the steps with links which were necessary to install Eclipse with ARM tools in my Win10 partition
 
 * ### Download Eclipse
-    Download eclipse but do not run it yet
-    https://github.com/gnu-mcu-eclipse/org.eclipse.epp.packages/releases/
+    If you don't have eclipse on your PC, download it. You can rather download the basic c++ version from <https://www.eclipse.org/downloads/packages/> 
+    ![eclipse download](./images/eclipse_download.png)
+    and install the plug-ins by yourself by adding the updatesite (later!)
+    
+    
+    or
+    download the version with already installed plug-ins from
+    <https://github.com/gnu-mcu-eclipse/org.eclipse.epp.packages/releases/>
 
-    *Note: To install the xPacks you will need XPM. XPM needs Node.js to be installed on your computer. If you got working XPM already then just skip this steps.*
+## Setting up
 
+   *Note: To install the xPacks you will need XPM. XPM needs Node.js to be installed on your computer. If you got working XPM already then just skip this steps and continue with ["Install the ARM-Environment"](#arm_env)*
 
-* #### Install Node.js
+* ### Install Node.js
     Go ahead and visit this link https://nodejs.org/en/ . Download the exe and install it. It asked me if I would like to install addictional build tools os something like that and to be sure everything would work I did it
     After that, if you type 
     ```
@@ -45,11 +52,11 @@ Below I extracted all the steps with links which were necessary to install Eclip
     ```
     you can install xpm.
     
-* ### Install the ARM-Environment
+* ### <a name="arm_env"></a>Install the ARM-Environment
 
     *for linux: it is not necessary to run the commands as root or sudo, the xPacks will land in your home directory in linux under "/home/XXX/opt/xPacks" and in "C:\Users\XXX\AppData\Roaming\xPacks" on Windows*
 
-  * ### GNU MCU Eclipse Windows Build Tools
+  * ### (Windows ONLY!) GNU MCU Eclipse Windows Build Tools
     ```
     xpm install --global @gnu-mcu-eclipse/windows-build-tools@latest
     ```
@@ -83,12 +90,32 @@ If your Eclipse starts then you can skip this step
     Visit https://www.java.com/en/download/manual.jsp download and run installer. After that Eclipse should start
 
 ## Setup eclipse
+   If you donwloaded the preconfigured version of eclipse there is no need to install the pluginy anymore. With basic 
+   version you have to add the updatesite to eclipse repositories and install the plugins
+   
+   To add a new repository go to
+   ```
+   Help -> Install New Software
+   ```
+   ![eclipse install new](./images/eclipse_install_new_software.png)
 
-If you add the plugin updatesite to eclipse repos you will see that all the plugins are areday marked as installed because we did it already with the xpm packs (Unfortunately we installed ALL! plugins from this repo, even the ones we dont need for this particular project)
+   Then add the Repository by pressing the "Add..." button and adding
+   ```
+   http://gnu-mcu-eclipse.netlify.com/v4-neon-updates
+   ```
+   ![eclipse add repo](./images/eclipse_add_repo.png)
 
-![plugin selection](./images/Unbenannt9.PNG)
+   ![eclipse add repo2](./images/arm_repo.png)
+   
+   Select the ARM Cross Compiler, Packs and OpenOCD Debugging and go through the install wizzard.
 
-So there is no need to install any plugins anymore. 
+   ![eclipse plugins](./images/eclipse_plugins.png)
+
+   If you installed the version with included plug-ins then all the available plugins will be grayed out
+  ![plugin selection](./images/Unbenannt9.PNG)
+     You dont need to do anything at this stage.
+
+
 At this stage it is already possible to import a Makefile project but it wont compile. because you can't select a MCU you as a target because the list is empty.
 To change this you should perform the following steps:
 
@@ -122,7 +149,7 @@ To change this you should perform the following steps:
 
 ## Import the project
 
-Get a copy of your desired project. In my case it is the bldc from the VESC project ( https://github.com/vedderb/bldc )
+Get a copy of your desired project. In my case it is the bldc from the VESC project ( <https://github.com/vedderb/bldc> )
 
 Now go ahead an select
 ```
@@ -141,8 +168,6 @@ C/C++ Build -> Settings -> Devices
  select the MCU the project was built for
 ![mcu setting](./images/Unbenannt18.PNG)
 
-and the Build Tools Path
-![build setting](./images/Unbenannt19.PNG)
 
 After you hit OK try to build the project with right click and "Build Project" and it should already work.
 If it doesnt check if all the paths to the toolchain are set in Eclipse.
@@ -175,14 +200,18 @@ in my case on linux the option was
 ```
 -f /home/max/opt/xPacks/@xpack-dev-tools/openocd/0.10.0-13.1/.content/scripts/board/stm32f4discovery.cfg
 ```
+or just 
+```
+-f board/stm32f4discovery.cfg
+```
 
-*Note: On linux i had to install "gdb-multiarch" and add*
+*Note: On linux it happened to me that wrong GDB was used, so I had to install "gdb-multiarch" and add*
 ```
 set architecture arm
 set mem inaccessible-by-default off
 ```
-to commands in GDB Client setup, which was not necessary on Windows
-
+to commands in GDB Client setup.
+I think this was due to I have made some experiments and variants before so my installation got somehow corrupted
 
 thats all...
 
